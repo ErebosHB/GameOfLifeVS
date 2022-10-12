@@ -34,25 +34,20 @@ body {
 
 table{
     border:1px solid black;
-    border-spacing: 1px;
     background-color: black;
 }
 
-
-
-.cellfilled {
-    background-color: black;
-    
-    width: 17px;
-    height: 19px;
-    
+.cell{
+    border: 1px;
+    width: 16px;
+    height: 18px;
 }
-.cellempty {
-    background-color: white;
 
-    width: 17x;
-    height: 19px;
-    
+.filled {
+    background-color: white;   
+}
+.empty {
+    background-color: black;   
 }
 
 

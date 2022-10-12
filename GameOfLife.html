@@ -7,100 +7,121 @@
     <body>
         <div id = "button">
             <button class="taste">Löschen</button>
-            <button class="taste">Zufällig</button>
+            <button class="taste">Einzelschritt</button>
             <button class="taste">Fortsetzen</button>
         </div>
         <table id="field"></table>
         <script>
-            var size =50;
-            var cells;
-            var htmlElements;
-            
-            var EMPTY = 0;
-            var ALIVE = 1;
+            var taste = document.getElementsByClassName("taste")
 
-            function createField(){
+            for(const taste of tasten){
+               taste.addEventListener("click", function(ereignis){
+               const angeklicktesZeichen = ereignis.target.textContent;
+
+               switch(angeklicktesZeichen){
+                case "Einzelschritt":
+                    setInterval(clearInterval);
+                    break;
+                
+                case "Löschen":
+                    break;
+                
+                default:
+                    break;
+               }
+               });
+            }
+
+            var render =100;
+            var zellen;
+            var htmlElements;            
+            var LEER = 0;
+            var LEBT = 1;
+
+            
+                function createField(){
 
                 htmlElements = [];
-                cells = [];
-                var table = document.getElementById('field');
-                
-                for( var x = 0; x < size; x++){
-                var tr = document.createElement('tr');
-                var tdElements = [];
-                cells.push(new Array(size).fill(EMPTY));
-                htmlElements.push(tdElements);
-                table.appendChild(tr);
-                
-                for(var y = 0; y < size; y++){
-                    var td = document.createElement('td');
-                    tdElements.push(td);
-                    tr.appendChild(td);
-
+                zellen = [];
+                var table = document.getElementById("field");
+                for( var x = 0; x < render; x++){
+                    var tr = document.createElement("tr");
+                    var tdElements = [];
+                    zellen.push(new Array(render).fill(LEER));
+                    htmlElements.push(tdElements);
+                    table.appendChild(tr);
+                    for(var y = 0; y < render; y++){
+                        var td = document.createElement("td");
+                        tdElements.push(td);
+                        tr.appendChild(td);
                 }
             }  
         }
 
             function draw(){
-                for(var x = 0; x < size; x++){
-                    for(var y = 0; y < size; y++){
-                        htmlElements[x][y].setAttribute('class', 'cell'+ (cells[x][y] == 1 ? 'filled' : 'empty'));
+                for(var x = 0; x < render; x++){
+                    for(var y = 0; y < render; y++){
+                        htmlElements[x][y].setAttribute("class", "cell "+ (zellen[x][y] == 1 ? "filled" : "empty"));
                     }
                 }
             }
  
             function nachbarnZaehlen(x, y){
                 var zaehlen = 0;
-                for(var i = -1; i < 2; i++){
-                    for(var j = -1; j < 2; j++){
-                        var sx = (x + i + size)%size;
-                        var ry = (y + j + size)%size;
-                        zaehlen += cells[sx][ry];
+                for( var i = -1; i <= 1; i++){
+                    for( var j = -1; j <= 1; j++){
+                        var si = (x + i + render)%render;
+                        var rj = (y + j + render)%render;
+                        zaehlen = zaehlen + zellen[si][rj];
                     }
 
                 }
-                zaehlen -= cells[x][y];
-                return zaehlen;
+                return zaehlen - zellen[x][y];
             }
 
             function regeln() {
-                var newCells = [];
-                for(var i = 0; i < size; i++){
-                    newCells.push(new Array(size).fill(EMPTY));
+                var neueZellen = [];
+                for(var i = 0; i < render; i++){
+                    neueZellen.push(new Array(render).fill(LEER));
                 }
-                for(var x = 0; x < size; x++){
-                    for(var y = 0; y < size; y++){
-                        var nachbarn = nachbarnZaehlen(x, y); 
-                        if(cells[x][y] == ALIVE && nachbarn == 2 || nachbarn == 3 ){
-                            newCells[x][y] =ALIVE;
+                for(var x = 0; x < render; x++){
+                    for(var y = 0; y < render; y++){
+                        var nachbarn = nachbarnZaehlen(x, y);
+                        if(zellen[x][y] == LEER && nachbarn == 3){
+                            neueZellen[x][y] = LEBT;
+                        } 
+                        if(zellen[x][y] == LEBT && nachbarn == 2 || nachbarn == 3 ){
+                            neueZellen[x][y] = LEBT;
                         }
-                        if(cells[x][y] == EMPTY && nachbarn == 3){
-                            newCells = ALIVE;
-                        }
+                        
                     }
                 }
-                cells = newCells;
+                zellen = neueZellen;
                 draw();
             }
 
             function init(){
                 createField();
-                for(var i = 0; i < Math.floor(size*size*0.3);i++){
+                for(var i = 0; i < Math.floor(render*render*0.3);i++){
                     var x , y;
                     do{
-                        x = Math.floor(Math.random()*size), y = Math.floor(Math.random()*size);
-                        if(cells[x][y] == EMPTY){
-                            cells[x][y] = ALIVE;
+                        x = Math.floor(Math.random()*render), y = Math.floor(Math.random()*render);
+                        if(zellen[x][y] == LEER){
+                            zellen[x][y] = LEBT;
                             break;
                         }
                     }while(true);
                     
                 }
                 draw();
-                setInterval(regeln(), 100); 
+                setInterval(regeln, 100);
             }
-            
+        
+           
            init();
+            
+
+            
         </script>         
     </body>
 </html>
