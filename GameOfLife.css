@@ -4,7 +4,7 @@ body {
     display: grid;
     place-items: center;
     margin: 0;
-    background-color: black;
+    background-color: white;
     color: rgb(137, 71, 163);
 }
 
@@ -30,6 +30,29 @@ body {
 
 .taste:hover{
     background-color: rgb(86, 90, 90);
+}
+
+table{
+    border:1px solid black;
+    border-spacing: 1px;
+    background-color: black;
+}
+
+
+
+.cellfilled {
+    background-color: black;
+    
+    width: 17px;
+    height: 19px;
+    
+}
+.cellempty {
+    background-color: white;
+
+    width: 17x;
+    height: 19px;
+    
 }
 
 

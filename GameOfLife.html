@@ -2,23 +2,7 @@
     <head>
         <title>GameOfLife</title>
         <link rel="stylesheet" href="GameOfLife.css">
-        <meta name="viewport" content="width=device-width, initial-scale=1.75">
-        <style>
-            .cellfilled {
-                background-color: white;
-                
-                width: 6px;
-                height: 8px;
-                
-            }
-            .cellempty {
-                background-color: black;
-            
-                width: 6px;
-                height: 8px;
-                
-            }
-        </style>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body>
         <div id = "button">
@@ -26,8 +10,7 @@
             <button class="taste">Zufällig</button>
             <button class="taste">Fortsetzen</button>
         </div>
-        
-           <table id="field" style="border: 1px solid black"></table>
+        <table id="field"></table>
         <script>
             var size =50;
             var cells;
@@ -65,7 +48,7 @@
                     }
                 }
             }
-
+ 
             function nachbarnZaehlen(x, y){
                 var zaehlen = 0;
                 for(var i = -1; i < 2; i++){
@@ -76,8 +59,28 @@
                     }
 
                 }
-                zaehlen - cells[x][y];
+                zaehlen -= cells[x][y];
                 return zaehlen;
+            }
+
+            function regeln() {
+                var newCells = [];
+                for(var i = 0; i < size; i++){
+                    newCells.push(new Array(size).fill(EMPTY));
+                }
+                for(var x = 0; x < size; x++){
+                    for(var y = 0; y < size; y++){
+                        var nachbarn = nachbarnZaehlen(x, y); 
+                        if(cells[x][y] == ALIVE && nachbarn == 2 || nachbarn == 3 ){
+                            newCells[x][y] =ALIVE;
+                        }
+                        if(cells[x][y] == EMPTY && nachbarn == 3){
+                            newCells = ALIVE;
+                        }
+                    }
+                }
+                cells = newCells;
+                draw();
             }
 
             function init(){
@@ -93,15 +96,12 @@
                     }while(true);
                     
                 }
-                draw(); 
-
+                draw();
+                setInterval(regeln(), 100); 
             }
             
            init();
-        </script> 
-        
-
-        
+        </script>         
     </body>
 </html>
 
