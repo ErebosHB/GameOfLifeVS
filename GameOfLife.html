@@ -1,0 +1,121 @@
+<html>
+    <head>
+        <title>GameOfLife</title>
+        <link rel="stylesheet" href="GameOfLife.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.75">
+        <style>
+            .cellfilled {
+                background-color: white;
+                
+                width: 6px;
+                height: 8px;
+                
+            }
+            .cellempty {
+                background-color: black;
+            
+                width: 6px;
+                height: 8px;
+                
+            }
+        </style>
+    </head>
+    <body>
+        <div id = "button">
+            <button class="taste">Löschen</button>
+            <button class="taste">Zufällig</button>
+            <button class="taste">Fortsetzen</button>
+        </div>
+        
+           <table id="field" style="border: 1px solid black"></table>
+        <script>
+            var size =50;
+            var cells;
+            var htmlElements;
+            
+            var EMPTY = 0;
+            var ALIVE = 1;
+
+            function createField(){
+
+                htmlElements = [];
+                cells = [];
+                var table = document.getElementById('field');
+                
+                for( var x = 0; x < size; x++){
+                var tr = document.createElement('tr');
+                var tdElements = [];
+                cells.push(new Array(size).fill(EMPTY));
+                htmlElements.push(tdElements);
+                table.appendChild(tr);
+                
+                for(var y = 0; y < size; y++){
+                    var td = document.createElement('td');
+                    tdElements.push(td);
+                    tr.appendChild(td);
+
+                }
+            }  
+        }
+
+            function draw(){
+                for(var x = 0; x < size; x++){
+                    for(var y = 0; y < size; y++){
+                        htmlElements[x][y].setAttribute('class', 'cell'+ (cells[x][y] == 1 ? 'filled' : 'empty'));
+                    }
+                }
+            }
+
+            function nachbarnZaehlen(x, y){
+                var zaehlen = 0;
+                for(var i = -1; i < 2; i++){
+                    for(var j = -1; j < 2; j++){
+                        var sx = (x + i + size)%size;
+                        var ry = (y + j + size)%size;
+                        zaehlen += cells[sx][ry];
+                    }
+
+                }
+                zaehlen - cells[x][y];
+                return zaehlen;
+            }
+
+            function init(){
+                createField();
+                for(var i = 0; i < Math.floor(size*size*0.3);i++){
+                    var x , y;
+                    do{
+                        x = Math.floor(Math.random()*size), y = Math.floor(Math.random()*size);
+                        if(cells[x][y] == EMPTY){
+                            cells[x][y] = ALIVE;
+                            break;
+                        }
+                    }while(true);
+                    
+                }
+                draw(); 
+
+            }
+            
+           init();
+        </script> 
+        
+
+        
+    </body>
+</html>
+
+
+        
+
+            
+            
+        
+            
+            
+       
+    
+        
+        
+        
+    

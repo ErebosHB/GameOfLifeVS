@@ -1,0 +1,39 @@
+
+
+body {
+    display: grid;
+    place-items: center;
+    margin: 0;
+    background-color: black;
+    color: rgb(137, 71, 163);
+}
+
+
+
+#button {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    
+    
+}
+
+.taste{
+    
+    background-color: grey;
+    border: none;
+    font-size: 1.2rem;
+    padding: 1em 2em;
+    border-radius: 0.25em;
+    cursor: pointer;
+    
+}
+
+.taste:hover{
+    background-color: rgb(86, 90, 90);
+}
+
+
+
+
+
+
