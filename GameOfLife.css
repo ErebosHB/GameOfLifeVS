@@ -4,27 +4,26 @@ body {
     display: grid;
     place-items: center;
     margin: 0;
-    background-color: white;
-    color: rgb(137, 71, 163);
+    background-color: lightblue;
+    
 }
 
 
 
 #button {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 1px;
-    
-    
-}
+    }
 
 .taste{
     
     background-color: grey;
-    border: none;
-    font-size: 1.2rem;
+    border: 1px solid black;
+    font-size: 2rem;
     padding: 1em 2em;
     border-radius: 0.25em;
     cursor: pointer;
+    
     
 }
 
@@ -38,13 +37,14 @@ table{
 }
 
 .cell{
+    height: 4px;
+    width: 2px;
     border: 1px;
-    width: 16px;
-    height: 18px;
+    
 }
 
 .filled {
-    background-color: white;   
+    background-color: rgb(192, 240, 20);   
 }
 .empty {
     background-color: black;   

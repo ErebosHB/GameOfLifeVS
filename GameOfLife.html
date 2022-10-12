@@ -8,45 +8,79 @@
         <div id = "button">
             <button class="taste">Löschen</button>
             <button class="taste">Einzelschritt</button>
+            <button class="taste">Zufällig</button>
             <button class="taste">Fortsetzen</button>
         </div>
         <table id="field"></table>
         <script>
-            var taste = document.getElementsByClassName("taste")
-
+            var render =150;
+            var zellen;
+            var htmlElements;            
+            var LEER = 0;
+            var LEBT = 1;
+            var myInterval;
+            const TASTEN_KLASSE = "taste";
+            var tasten = document.getElementsByClassName(TASTEN_KLASSE);
+            createField();
+            anfangUndEnde();
+            
             for(const taste of tasten){
                taste.addEventListener("click", function(ereignis){
                const angeklicktesZeichen = ereignis.target.textContent;
 
                switch(angeklicktesZeichen){
+                
+                case "Fortsetzen":
+                start();
+                    break;
+
                 case "Einzelschritt":
-                    setInterval(clearInterval);
+                    stop();
+                    regeln();
                     break;
-                
+
                 case "Löschen":
+                    anfangUndEnde();
                     break;
-                
+
                 default:
+                    init();
                     break;
                }
-               });
-            }
+            });
+        }
 
-            var render =100;
-            var zellen;
-            var htmlElements;            
-            var LEER = 0;
-            var LEBT = 1;
+        function start(){
+            interval = setInterval(regeln, 10);
+        }
+        function stop(){
+            clearInterval(interval)
+        }
 
+        function anfangUndEnde(){
             
-                function createField(){
-
-                htmlElements = [];
-                zellen = [];
-                var table = document.getElementById("field");
-                for( var x = 0; x < render; x++){
-                    var tr = document.createElement("tr");
-                    var tdElements = [];
+            var alteZellen = [];
+                for(var i = 0; i < render; i++){
+                    alteZellen.push(new Array(render).fill(LEER));
+                }
+                for(var x = 0; x < render; x++){
+                    for(var y = 0; y < render; y++){
+                        alteZellen[x][y] = LEER;
+                        
+                        
+                    }
+                }
+                
+                zellen = alteZellen;
+                draw();
+        }
+        function createField(){
+            htmlElements = [];
+            zellen = [];
+            var table = document.getElementById("field");
+            for( var x = 0; x < render; x++){
+                var tr = document.createElement("tr");
+                var tdElements = [];
                     zellen.push(new Array(render).fill(LEER));
                     htmlElements.push(tdElements);
                     table.appendChild(tr);
@@ -94,6 +128,7 @@
                             neueZellen[x][y] = LEBT;
                         }
                         
+                        
                     }
                 }
                 zellen = neueZellen;
@@ -101,8 +136,8 @@
             }
 
             function init(){
-                createField();
-                for(var i = 0; i < Math.floor(render*render*0.3);i++){
+                
+                for(var i = 0; i < Math.floor(render*render*0.4);i++){
                     var x , y;
                     do{
                         x = Math.floor(Math.random()*render), y = Math.floor(Math.random()*render);
@@ -111,17 +146,9 @@
                             break;
                         }
                     }while(true);
-                    
-                }
-                draw();
-                setInterval(regeln, 100);
+                }draw();
             }
-        
-           
-           init();
-            
 
-            
         </script>         
     </body>
 </html>
