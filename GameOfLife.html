@@ -5,20 +5,23 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body>
-        <div id = "button">
+        <div id = "buttonOben">
             <button class="taste">Löschen</button>
             <button class="taste">Einzelschritt</button>
             <button class="taste">Zufällig</button>
             <button class="taste">Fortsetzen</button>
         </div>
         <table id="field"></table>
+        <div id="buttonUnten">
+            <button class="taste">Gleiter</button>
+        </div>
+
         <script>
             var render =150;
             var zellen;
             var htmlElements;            
             var LEER = 0;
             var LEBT = 1;
-            var myInterval;
             const TASTEN_KLASSE = "taste";
             var tasten = document.getElementsByClassName(TASTEN_KLASSE);
             createField();
@@ -31,7 +34,7 @@
                switch(angeklicktesZeichen){
                 
                 case "Fortsetzen":
-                start();
+                    start();
                     break;
 
                 case "Einzelschritt":
@@ -39,38 +42,38 @@
                     regeln();
                     break;
 
+                case "Gleiter":
+                    gleiter();
+                    break;
+
                 case "Löschen":
                     anfangUndEnde();
                     break;
 
                 default:
-                    init();
+                    zufall();
                     break;
                }
             });
         }
 
         function start(){
-            interval = setInterval(regeln, 10);
+            interval = setInterval(regeln, 100);
         }
         function stop(){
             clearInterval(interval)
         }
 
-        function anfangUndEnde(){
-            
+        function anfangUndEnde(){            
             var alteZellen = [];
                 for(var i = 0; i < render; i++){
                     alteZellen.push(new Array(render).fill(LEER));
                 }
                 for(var x = 0; x < render; x++){
                     for(var y = 0; y < render; y++){
-                        alteZellen[x][y] = LEER;
-                        
-                        
+                        alteZellen[x][y] = LEER;                                            
                     }
-                }
-                
+                }                
                 zellen = alteZellen;
                 draw();
         }
@@ -102,13 +105,12 @@
  
             function nachbarnZaehlen(x, y){
                 var zaehlen = 0;
-                for( var i = -1; i <= 1; i++){
-                    for( var j = -1; j <= 1; j++){
+                for( var i = -1; i < 2; i++){
+                    for( var j = -1; j < 2; j++){
                         var si = (x + i + render)%render;
                         var rj = (y + j + render)%render;
                         zaehlen = zaehlen + zellen[si][rj];
                     }
-
                 }
                 return zaehlen - zellen[x][y];
             }
@@ -126,21 +128,17 @@
                         } 
                         if(zellen[x][y] == LEBT && nachbarn == 2 || nachbarn == 3 ){
                             neueZellen[x][y] = LEBT;
-                        }
-                        
-                        
+                        }                                                
                     }
                 }
                 zellen = neueZellen;
                 draw();
             }
 
-            function init(){
-                
-                for(var i = 0; i < Math.floor(render*render*0.4);i++){
-                    var x , y;
+            function zufall(){                
+                for(var i = 0; i < Math.floor(render*render*0.4);i++){                    
                     do{
-                        x = Math.floor(Math.random()*render), y = Math.floor(Math.random()*render);
+                       var x = Math.floor(Math.random()*render), y = Math.floor(Math.random()*render);
                         if(zellen[x][y] == LEER){
                             zellen[x][y] = LEBT;
                             break;
@@ -149,6 +147,15 @@
                 }draw();
             }
 
+            function gleiter(){
+                var y = render-9 , x = 3;
+                zellen[x-1][y-1] = LEBT;
+                zellen[x][y-1] = LEBT;
+                zellen[x+1][y-1] = LEBT;
+                zellen[x][y+1] = LEBT;
+                zellen[x+1][y] = LEBT;
+                draw();
+            }
         </script>         
     </body>
 </html>

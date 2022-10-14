@@ -4,13 +4,13 @@ body {
     display: grid;
     place-items: center;
     margin: 0;
-    background-color: lightblue;
+    background-color: rgb(38, 40, 41);
     
 }
 
 
 
-#button {
+#buttonOben {
     grid-template-columns: repeat(4, 1fr);
     gap: 1px;
     }
@@ -44,7 +44,7 @@ table{
 }
 
 .filled {
-    background-color: rgb(192, 240, 20);   
+    background-color: rgb(141, 134, 33);   
 }
 .empty {
     background-color: black;   
